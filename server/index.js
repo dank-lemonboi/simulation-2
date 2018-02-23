@@ -5,7 +5,8 @@ const express = require('express'),
       checkForSessions = require('./middlewares/checkForSessions'),
       port = process.env.PORT || 3030,
       massive = require('massive'),
-      cors = require('cors');
+      cors = require('cors'), 
+      ctrl = require('./controllers/userController')
 
 require('dotenv').config()
 
@@ -20,6 +21,12 @@ app.use(session({
 }))
 
 app.use(checkForSessions);
+
+app.get('/api/users', ctrl.getUsers)
+app.post('/api/auth/register', ctrl.newUser)
+app.post('/api/auth/login', ctrl.loginSession)
+
+// app.post('/api/auth/login', ctrl.
 
 
 massive(process.env.CONNECTION_STRING).then( db => {
