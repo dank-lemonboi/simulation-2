@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import { Link }  from 'react-router-dom'
+import { connect } from 'react-redux'
+import { updateUsername, updatePassword } from '../ducks/reducer'
 
-export default class Login extends Component {
-
-
-
+class Login extends Component {
   render() {
     return (
       <div className="login_container">
       <div className="login_content">
         <div className="username_input">
           <span>Username</span>
-          <input onChange = { () => this.}/>
+          <input onChange = { (e) => this.props.updateUsername(e.target.value)}/>
         </div>
         <div className="password_input">
           <span>Password</span>
-          <input onChange = {}/>
+          <input onChange = { (e) => this.props.updatePassword(e.target.value)}/>
         </div>
         <div className="login_button_container" />
         <Link to='/dashboard'><div id="login_button">Login</div></ Link>
@@ -25,3 +24,10 @@ export default class Login extends Component {
     );
   }
 }
+    function mapStateToProps( state)  {
+      return {
+        username: state.username,
+        password: state.password
+      }
+        }
+  export default connect(mapStateToProps, { updateUsername, updatePassword })(Login)
